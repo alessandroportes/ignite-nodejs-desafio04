@@ -1,0 +1,102 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Desafio: Introdução ao SOLID",
+    "description": "API Users",
+    "version": "1.0.0",
+    "contact": {
+      "email": "alessandro.portes@gmail.com"
+    }
+  },
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Create a user",
+        "description": "The route must receive name, and email inside the request body so that it is possible to register a user.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name": "User name",
+                  "email": "Email user"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "User already exists"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Users"],
+        "summary": "List all users",
+        "description": "The route must receive, through the request header, a user_id property containing the user id and return a list with all registered users. The id should be used to validate that the user requesting the listing is an admin. Returning from the list should only be done if the user is admin.",
+        "requestBody": {},
+        "responses": {}
+      }
+    },
+    "/users/{user_id}/admin": {
+      "patch": {
+        "tags": ["Users"],
+        "summary": "Alter user as admin",
+        "description": "The route must receive, in the route parameters, the id of a user and make that user admin.",
+        "parameters": [
+          {
+            "name": "user_id",
+            "description": "User id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "User already exists"
+          }
+        }
+      }
+    },
+    "/users/{user_id}": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "List all users",
+        "description": "The route must receive, through the request header, a user_id property containing the user id and return a list with all registered users. The id should be used to validate that the user requesting the listing is an admin. Returning from the list should only be done if the user is admin.",
+        "parameters": [
+          {
+            "name": "user_id",
+            "description": "User id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "User not permission"
+          }
+        }
+      }
+    }
+  }
+}
